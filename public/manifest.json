@@ -1,0 +1,29 @@
+{
+  "name": "EDR - Éthio-Djibouti Railway",
+  "short_name": "EDR",
+  "description": "Réservez vos billets de train facilement sur la ligne Éthio-Djibouti",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["travel", "transportation"],
+  "lang": "fr",
+  "dir": "ltr",
+  "prefer_related_applications": false
+} 
