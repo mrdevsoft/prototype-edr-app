@@ -22,8 +22,17 @@ import {
 import { useApp } from '@/contexts/AppContext';
 import { formatCurrency, convertCurrency } from '@/lib/utils';
 
+interface SearchData {
+  from?: string;
+  to?: string;
+  departureDate?: string;
+  returnDate?: string;
+  passengers?: number;
+  tripType?: 'oneWay' | 'roundTrip';
+}
+
 interface HomePageProps {
-  onNavigate: (page: string, data?: any) => void;
+  onNavigate: (page: string, data?: SearchData) => void;
 }
 
 export function HomePage({ onNavigate }: HomePageProps) {
@@ -83,7 +92,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       fromValue: from,
       toValue: to,
       departureDate,
-      returnDate: tripType === 'roundTrip' ? returnDate : null,
+      returnDate: tripType === 'roundTrip' ? returnDate : undefined,
       passengers,
       tripType
     };

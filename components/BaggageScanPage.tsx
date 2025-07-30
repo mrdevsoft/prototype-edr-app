@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
@@ -14,7 +14,6 @@ import {
   CheckCircle,
   XCircle,
   Scan,
-  AlertTriangle,
   Info
 } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
@@ -23,15 +22,41 @@ interface BaggageScanPageProps {
   onNavigate: (page: string) => void;
 }
 
+interface ScannedBaggageData {
+  baggageId: string;
+  owner: {
+    name: string;
+    phone: string;
+    ticketId: string;
+    nationality: string;
+  };
+  trip: {
+    from: string;
+    to: string;
+    date: string;
+    trainNumber: string;
+  };
+  baggage: {
+    weight: string;
+    type: string;
+    priority?: string;
+    status?: string;
+    color?: string;
+    brand?: string;
+    registered?: string;
+  };
+  status?: string;
+}
+
 export function BaggageScanPage({ onNavigate }: BaggageScanPageProps) {
-  const { t, language, user } = useApp();
+  const { language } = useApp();
   const [isScanning, setIsScanning] = useState(false);
-  const [scannedData, setScannedData] = useState<any>(null);
+  const [scannedData, setScannedData] = useState<ScannedBaggageData | null>(null);
   const [scanResult, setScanResult] = useState<'success' | 'error' | null>(null);
   const [userType, setUserType] = useState<'client' | 'agent'>('client');
 
   // Mock baggage data for demo
-  const mockBaggageData = {
+  const mockBaggageData: ScannedBaggageData = {
     baggageId: 'BAG-EDR-001234',
     owner: {
       name: 'Abdelnassir Haroun',

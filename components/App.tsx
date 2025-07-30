@@ -17,13 +17,35 @@ import { Button } from '@/components/ui/button';
 
 type AppState = 'loading' | 'splash' | 'login' | 'otp' | 'home' | 'tickets' | 'settings' | 'profile' | 'payment' | 'search-results' | 'seat-selection' | 'notifications' | 'search' | 'baggage-tracking' | 'baggage-scan';
 
+// Define types for search data
+interface SearchData {
+  from?: string;
+  to?: string;
+  departureDate?: string;
+  returnDate?: string;
+  passengers?: number;
+  tripType?: 'oneWay' | 'roundTrip';
+  selectedTrip?: {
+    id: number;
+    from: string;
+    to: string;
+    departure: string;
+    arrival: string;
+    duration: string;
+    price: number;
+    available: number;
+    type: string;
+  };
+  selectedSeats?: string[];
+}
+
 function AppContent() {
   const { isAuthenticated, t } = useApp();
   const [currentState, setCurrentState] = useState<AppState>('loading');
-  const [searchData, setSearchData] = useState<any>(null);
+  const [searchData, setSearchData] = useState<SearchData | undefined>(undefined);
 
   // Handle navigation with type conversion
-  const navigate = (page: string, data?: any) => {
+  const navigate = (page: string, data?: SearchData) => {
     const validStates: AppState[] = ['loading', 'splash', 'login', 'otp', 'home', 'tickets', 'settings', 'profile', 'payment', 'search-results', 'seat-selection', 'notifications', 'search', 'baggage-tracking', 'baggage-scan'];
     if (validStates.includes(page as AppState)) {
       setCurrentState(page as AppState);
@@ -155,7 +177,7 @@ function AppContent() {
 }
 
 // Page de résultats de recherche avec option de filtrage
-function SearchResultsPage({ onNavigate, searchData }: { onNavigate: (page: string, data?: any) => void, searchData: any }) {
+function SearchResultsPage({ onNavigate, searchData }: { onNavigate: (page: string, data?: SearchData) => void, searchData: SearchData | undefined }) {
   const { t, currency } = useApp();
   const [showFilters, setShowFilters] = useState(false);
   
@@ -312,8 +334,7 @@ function SearchResultsPage({ onNavigate, searchData }: { onNavigate: (page: stri
 }
 
 // Page de sélection de sièges
-function SeatSelectionPage({ onNavigate, searchData }: { onNavigate: (page: string, data?: any) => void, searchData: any }) {
-  const { t } = useApp();
+function SeatSelectionPage({ onNavigate, searchData }: { onNavigate: (page: string, data?: SearchData) => void, searchData: SearchData | undefined }) {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   
   // Mock seat layout
@@ -362,7 +383,7 @@ function SeatSelectionPage({ onNavigate, searchData }: { onNavigate: (page: stri
       <div className="bg-white shadow-sm border-b px-4 py-3">
         <div className="flex items-center justify-between">
           <button
-            onClick={() => onNavigate('search-results', searchData)}
+            onClick={() => onNavigate('search-results', searchData || undefined)}
             className="p-2 hover:bg-gray-100 rounded-lg"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -720,7 +741,7 @@ function ProfilePage({ onNavigate }: { onNavigate: (page: string) => void }) {
 
 // Page de vérification OTP
 function OTPPage({ onVerified }: { onVerified: () => void }) {
-  const { t, language } = useApp();
+  const { language } = useApp();
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
 
@@ -800,7 +821,7 @@ function OTPPage({ onVerified }: { onVerified: () => void }) {
 
           <div className="text-center">
             <p className="text-gray-600 text-sm mb-2">
-              {language === 'fr' ? "Vous n'avez pas reçu le code ?" : "Didn't receive the code?"}
+              {language === 'fr' ? "Vous n&apos;avez pas reçu le code ?" : "Didn't receive the code?"}
             </p>
             <button
               onClick={handleResend}
@@ -827,7 +848,7 @@ function OTPPage({ onVerified }: { onVerified: () => void }) {
 
 // Page de suivi des bagages
 function BaggageTrackingPage({ onNavigate }: { onNavigate: (page: string) => void }) {
-  const { t, language } = useApp();
+  const { language } = useApp();
   const [trackingNumber, setTrackingNumber] = useState('');
   
   // Mock baggage data

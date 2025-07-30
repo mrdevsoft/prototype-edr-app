@@ -10,7 +10,7 @@ interface NotificationsPageProps {
 }
 
 export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
-  const { t, language } = useApp();
+  const { language } = useApp();
 
   const notifications = [
     {

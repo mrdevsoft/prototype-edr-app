@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Train, Languages, Eye, EyeOff, User, Mail, Phone, IdCard, FileText } from 'lucide-react';
+import { Languages, Eye, EyeOff, User, Mail, Phone, IdCard, FileText } from 'lucide-react';
 import { useApp, useDefaultLogin } from '@/contexts/AppContext';
 import Image from 'next/image';
 

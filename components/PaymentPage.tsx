@@ -16,9 +16,30 @@ import { useApp } from '@/contexts/AppContext';
 import { formatCurrency, convertCurrency } from '@/lib/utils';
 import Image from 'next/image';
 
+interface SearchData {
+  from?: string;
+  to?: string;
+  departureDate?: string;
+  returnDate?: string;
+  passengers?: number;
+  tripType?: 'oneWay' | 'roundTrip';
+  selectedTrip?: {
+    id: number;
+    from: string;
+    to: string;
+    departure: string;
+    arrival: string;
+    duration: string;
+    price: number;
+    available: number;
+    type: string;
+  };
+  selectedSeats?: string[];
+}
+
 interface PaymentPageProps {
-  onNavigate: (page: string, data?: any) => void;
-  searchData?: any;
+  onNavigate: (page: string, data?: SearchData) => void;
+  searchData?: SearchData;
 }
 
 export function PaymentPage({ onNavigate, searchData }: PaymentPageProps) {
@@ -350,7 +371,7 @@ export function PaymentPage({ onNavigate, searchData }: PaymentPageProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Date d'expiration *
+                        Date d&apos;expiration *
                       </label>
                       <Input
                         type="text"
